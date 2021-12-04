@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="CSS/main.css">
+        <title>Projet Web</title>
+    </head>
+    <body>
+        <div id="interfaces" style="display: none;">
+            <div id="slider_switch_r"></div>
+            <div id="slider_switch_l"></div>
+
+            <div id="load_interface" class="center-interface">
+                <div class="center menu-color">
+                    <div class="title">
+                        <h1>LOADING...</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div id="press_enter" class="center-interface">
+                <div class="center menu-color">
+                    <div class="title">
+                        <h1>PRESS ENTER TO START</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div id="main_menu" class="center-interface">
+                <div class="center menu-color">
+                    <div class="title">
+                        <h1>SUPER MEGA JEU DE LA MORT QUI TUE</h1>
+                    </div>
+                    <div class="center-col">
+                        <div>
+                            <button id="start_button">Start</button>
+                        </div>
+                        <div>
+                            <button id="settings_button">Settings</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="settings_menu" class="center-interface">
+                <div class="center menu-color">
+                    <div class="title">
+                        <h1>Options</h1>
+                    </div>
+                    <div>
+                        <div class="center-row margin20px">
+                            <div>
+                                <p>Fullscreen</p>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox" id="fullscreen_checkbox">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="margin20px center-row">
+                            <div>
+                                <p>Frame Rate</p>
+                            </div>
+                            <div class="dropdown">
+                                <div class="dropbtn" id="framerate">30</div>
+                                <div id="myDropdown" class="dropdown-content">
+                                    <span>30</span>
+                                    <span>60</span>
+                                    <span>120</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <button id="back_button">Back</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="pause_widget" class="center-interface" style="background-color: #000000aa;">
+                <div class="center menu-color">
+                    <div class="title">
+                        <h1>Pause</h1>
+                    </div>
+                    <div class="center-col">
+                        <div>
+                            <button id="quit_game_button">Quit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="framerate_ui" style="width: 50px; height: 50px; text-align: center; margin: 10px;">
+                <span>0</span>
+            </div>
+        </div>
+
+        <!-- GAME ENGINE -->
+
+        <script src="JS/Engine/Libs/Vector2.js"></script>
+        <script src="JS/Engine/Libs/Clock.js"></script>
+        <script src="JS/Engine/Libs/Sound.js"></script>
+        <script src="JS/Engine/Libs/Material.js"></script>
+        <script src="JS/Engine/Libs/Key.js"></script>
+        <script src="JS/Engine/Libs/MouseButton.js"></script>
+        <script src="JS/Engine/Libs/Color.js"></script>
+
+        <script src="JS/Engine/EngineSettings/Settings.js"></script>
+        
+        <script src="JS/Engine/Drawables/Drawable.js"></script>
+        <script src="JS/Engine/Drawables/Shapes/Shape.js"></script>
+        <script src="JS/Engine/Drawables/Particle/Particle.js"></script>
+        <script src="JS/Engine/Drawables/Shapes/RectangleShape.js"></script>
+        <script src="JS/Engine/Drawables/Image/Sprite.js"></script>
+        <script src="JS/Engine/Drawables/Image/SpriteSheet.js"></script>
+        <script src="JS/Engine/Drawables/Animation/Animation.js"></script>
+        <script src="JS/Engine/Drawables/Animation/AnimationRenderer.js"></script>
+
+        <script src="JS/Engine/Window/Window.js"></script>
+
+        <script src="JS/Engine/Components/Transform.js"></script>
+        <script src="JS/Engine/Components/RigidBody.js"></script>
+        <script src="JS/Engine/Components/AudioSource.js"></script>
+        <script src="JS/Engine/Components/Collider.js"></script>
+        <script src="JS/Engine/Components/Renderable.js"></script>
+        <script src="JS/Engine/Components/Camera.js"></script>
+        <script src="JS/Engine/Components/Animator.js"></script>
+        <script src="JS/Engine/Components/ParticleSystem.js"></script>
+
+        <script src="JS/Engine/Entities/Entity.js"></script>
+        <script src="JS/Engine/Entities/MainCamera.js"></script>
+
+        <script src="JS/Engine/Layer/Layer.js"></script>
+        <script src="JS/Engine/Layer/LayerMap.js"></script>
+        
+        <script src="JS/Engine/AnimationGraph/Node.js"></script>
+        <script src="JS/Engine/AnimationGraph/AnimationGraph.js"></script>
+        
+        <script src="JS/Engine/Systems/System.js"></script>
+        <script src="JS/Engine/Systems/CollisionEngine.js"></script>
+        <script src="JS/Engine/Systems/TransformEngine.js"></script>
+        <script src="JS/Engine/Systems/PhysicsEngine.js"></script>
+        <script src="JS/Engine/Systems/RenderingEngine.js"></script>
+        <script src="JS/Engine/Systems/AnimatorEngine.js"></script>
+        <script src="JS/Engine/Systems/ParticleSystemEngine.js"></script>
+
+        <script src="JS/Engine/ECS/ComponentArray.js"></script>
+        <script src="JS/Engine/ECS/SystemManager.js"></script>
+        <script src="JS/Engine/ECS/ECS.js"></script>
+
+        <script src="JS/Engine/Interfaces/Interface.js"></script>
+        <script src="JS/Engine/Interfaces/DropDown.js"></script>
+
+        <!-- GAME -->
+        
+        <script  src="JS/InfinitRunner/AnimationsConf/AnimationsConf.js"></script>
+        <script  src="JS/InfinitRunner/ParticleSystemConf/ParticleSystemConfg.js"></script>
+
+        <script src="JS/InfinitRunner/GameSettings/GameSettings.js"></script>
+
+        <script src="JS/InfinitRunner/Entities/Platform.js"></script>
+        <script src="JS/InfinitRunner/Entities/Bullet.js"></script>
+        <script src="JS/InfinitRunner/Entities/PlayerExplosion.js"></script>
+        <script src="JS/InfinitRunner/Entities/Drone.js"></script>
+        <script src="JS/InfinitRunner/Entities/Player.js"></script>
+        <script src="JS/InfinitRunner/Entities/PNJ.js"></script>
+
+        <script src="JS/InfinitRunner/Generator/BackgroundGenerator.js"></script>
+
+        <script src="JS/InfinitRunner/Managers/MusicsManager.js"></script>
+        <script src="JS/InfinitRunner/Managers/PNJManager.js"></script>
+
+        <script src="JS/InfinitRunner/States/State.js"></script>
+        <script src="JS/InfinitRunner/States/GameState.js"></script>
+        <script src="JS/InfinitRunner/States/SettingsState.js"></script>
+        <script src="JS/InfinitRunner/States/MenuState.js"></script>
+        <script src="JS/InfinitRunner/States/StartGameState.js"></script>
+        <script src="JS/InfinitRunner/States/LoadRessourcesState.js"></script>
+
+        <script src="JS/InfinitRunner/Game/Game.js"></script>
+        <script src="JS/InfinitRunner/main.js"></script>
+    </body>
+</html>

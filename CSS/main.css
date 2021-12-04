@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+    --title-size : 10px;
+
+    color: white;
+    font-size: 16px;
+}
+
+* {
+    font-family: 'Press Start 2P', cursive;
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+}
+
+.menu-color {
+    background-color: #6c5ce7f0;
+    border: #a29bfe 5px solid;
+    border-radius: 20px;
+    width: 45rem;
+    height: 30rem;
+}
+
+.center-interface {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+}
+
+.center-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.center-row {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    margin-bottom: 80px;
+    padding: 30px 0;
+    font-size: var(--title-size);
+}
+
+.slider.round {
+    border-radius: 34px;
+}
+  
+.slider.round:before {
+    border-radius: 50%;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+  }
+  
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+  
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.margin20px {
+    margin: 10px 0;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.dropbtn {
+    background-color: #6c5ce7;
+    color: white;
+    padding: 16px;
+    border: none;
+    cursor: pointer;
+}
+  
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #a29bfe;
+}
+  
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 5rem;
+}
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #a29bfe;
+    width: 5rem;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+.dropdown-content span {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+  
+.dropdown-content span:hover {
+    background-color: #6c5ce7;
+    cursor: pointer;
+}
+  
+.show {
+    display:block;
+}
+
+#slider_switch_r {
+    height: 100%;
+    width: 0;
+    background-color: #a29bfe;
+    z-index: 100;
+
+    animation: 0.7s forwards slideinR;
+}
+
+#slider_switch_l {
+    height: 100%;
+    width: 100%;
+    background-color: #a29bfe;
+    z-index: 100;
+
+    animation: 0.7s forwards slideinL;
+}
+
+#pause_widget > div {
+    transform : translateY(-1000px);
+    animation: 0.4s forwards pauseWidget;
+}
+
+button {
+    background-color: transparent;
+    border: solid #a29bfe;
+    width: 11rem;
+    height: 50px;
+    color: white;
+    margin: 10px 0;
+    border-radius: 5px;
+    transition-duration: 0.1s;
+}
+
+button:hover {
+    cursor: pointer;
+    width: 12rem;
+}
+  
+input:checked + .slider {
+    background-color: #2196F3;
+}
+  
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+}
+  
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+@keyframes slideinR {
+    100%   { width : 100% };
+}
+
+@keyframes slideinL {
+    100%   { width : 0% };
+}
+
+@keyframes pauseWidget {
+    100% {transform: translateY(0px);}
+}
