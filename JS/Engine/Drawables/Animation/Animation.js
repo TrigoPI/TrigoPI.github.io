@@ -1,9 +1,12 @@
 class Animation extends Drawable {
-    constructor(spriteSheet, name, duration) {
-        super(spriteSheet.position.x, spriteSheet.position.y);
+    constructor(spriteSheet, name, duration, loop = true) {
+        super(spriteSheet.position.x, spriteSheet.position.y);        
         this.name = name;
 
+        this.loop = loop;
+
         this.ended = false;
+        this.canPlay = true;
 
         this.currentFrame = 0;
         this.indexCol = 0;
@@ -20,7 +23,7 @@ class Animation extends Drawable {
     }
 
     #updateFrameCount() {
-        this.currentFrame = Math.ceil(this.clock.getTime() *  this.spriteSheet.frames / this.duration);
+        this.currentFrame = this.indexRow * this.spriteSheet.col + this.indexCol;
     }
 
     #updateIndex() {        
@@ -29,12 +32,13 @@ class Animation extends Drawable {
     }
 
     #updateEndOfAnimation() {
-        if (this.currentFrame >= this.spriteSheet.frames) {
-            this.ended = true;
-    
-            this.reset();
-        } else {
-            this.ended = false;
+        this.ended = false;
+
+        if (this.currentFrame >= this.spriteSheet.frames - 1) {
+            if (this.clock.getTime() >= this.duration) {
+                this.ended = true;
+                this.reset();
+            }
         }
     }
 
@@ -44,20 +48,38 @@ class Animation extends Drawable {
     }
 
     #updateAnimation() {
-        this.#updateIndex();
-        this.#updateFrameCount();
-        this.#updateEndOfAnimation();
+        if (this.canPlay) {
+            this.#updateFrameCount();
+            this.#updateIndex();
+            this.#updateEndOfAnimation();
+        }
     }
 
     isFinish() {
         return this.ended;
     }
 
-    reset() {
+    restart() {
+        this.canPlay = true;
+
         this.indexCol = 0;
         this.indexRow = 0;
 
         this.clock.restart();
+    }
+
+    reset() {
+        if (this.loop) {
+            this.indexCol = 0;
+            this.indexRow = 0;
+
+            this.clock.restart();
+        } else {
+            this.canPlay = false;
+            
+            this.indexCol = this.spriteSheet.col - 1;
+            this.indexRow = this.spriteSheet.row - 1;
+        }
     }
 
     update() {

@@ -4,16 +4,18 @@
     const player = {
         var : {
             bool : {
-                isRunning : false
+                isRunning : false,
+                isJumping : false
             },
             number : {
-                speed : 0,
+                speedX  : 0,
             }
         },
 
         nodes : [
             "idle",
-            "run"
+            "run",
+            "jump"
         ],
     
         nodesConf : {
@@ -27,6 +29,38 @@
                 parents : []
             },
 
+            anyState : {
+                childs : [
+                    {
+                        name : "jump",
+                        conditions : [
+                            {
+                                type : "bool",
+                                varName : "isJumping",
+                                equalTo : true,
+                            }
+                        ]
+                    }
+                ],
+                parents : []
+            },
+
+            jump : {
+                childs : [
+                    {
+                        name : "run",
+                        conditions : [
+                            {
+                                type : "bool",
+                                varName : "isJumping",
+                                equalTo : false
+                            }
+                        ]
+                    }
+                ],
+                parents : [],
+            },
+
             idle : {
                 childs  : [
                     {
@@ -34,7 +68,7 @@
                         conditions : [
                             {
                                 type : "number",
-                                varName : "speed",
+                                varName : "speedX",
                                 gt : 10
                             }
                         ]
@@ -51,7 +85,7 @@
                         conditions : [
                             {
                                 type : "number",
-                                varName : "speed",
+                                varName : "speedX",
                                 st : 50
                             }
                         ]
@@ -79,6 +113,11 @@
                         conditions : []
                     }
                 ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
                 parents : []
             },
 
@@ -110,6 +149,11 @@
                 parents : []
             },
 
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
             walk : {
                 childs  : [],
                 parents : [],
@@ -135,6 +179,11 @@
                         conditions : []
                     }
                 ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
                 parents : []
             },
 

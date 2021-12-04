@@ -12,6 +12,10 @@ class Animator {
         }
     }
 
+    restartAnimation(name) {
+        this.animations[name].restart();
+    }
+
     isFinish() {
         return this.getCurrentAnimation().isFinish();
     }

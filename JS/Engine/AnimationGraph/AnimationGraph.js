@@ -1,6 +1,7 @@
 class AnimationGraph {
     constructor(animationConf) {
-        this.entry = new Node("entry");   
+        this.entry = new Node("entry");  
+        this.anyState = new Node("anyState"); 
         this.var = animationConf.var;
         
         this.nodes = {};
@@ -55,13 +56,19 @@ class AnimationGraph {
 
     #initNodes(animationConf) {
         for (let name in animationConf.nodesConf) {
-            if (name == "entry") {
-                for (let child of animationConf.nodesConf[name].childs) {
-                    this.entry.addChild(this.nodes[child.name], child.conditions);
-                    
-                    if(this.#readConditions(child.conditions)) {
-                        this.currentNode = this.nodes[child.name];
-                    };
+            if (name == "entry" || name == "anyState") {
+                if (name == "anyState") {
+                    for (let child of animationConf.nodesConf[name].childs) {
+                        this.anyState.addChild(this.nodes[child.name], child.conditions);
+                    }
+                } else {
+                    for (let child of animationConf.nodesConf[name].childs) {
+                        this.entry.addChild(this.nodes[child.name], child.conditions);
+                        
+                        if(this.#readConditions(child.conditions)) {
+                            this.currentNode = this.nodes[child.name];
+                        };
+                    }
                 }
             } else {
                 for (let child of animationConf.nodesConf[name].childs) {
@@ -100,6 +107,14 @@ class AnimationGraph {
         }
     }
 
+    #updateAnyState() {
+        for (let child of this.anyState.childs) {
+            if (this.#readConditions(child.conditions)) {
+                this.currentNode = child.node
+            }
+        }
+    }
+
     setBool(varName, value) {
         console.assert(this.var.bool[varName] != undefined, `No var with name : ${varName}`)
     
@@ -127,6 +142,7 @@ class AnimationGraph {
     }
 
     update() {
+        this.#updateAnyState();
         this.#updateChilds();
         this.#updateParents();
     }  

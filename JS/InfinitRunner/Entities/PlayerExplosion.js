@@ -4,7 +4,7 @@ class PlayerExplosion extends Entity {
 
         this.explosionAudio = GameSettings.AUDIOS.explosionStart.clone();
         this.explosionSpriteSheet = GameSettings.TEXTURES.spriteSheets.explosion1.copy();
-        this.explosionAnimation   = new Animation(this.explosionSpriteSheet, "explosion1", 1);
+        this.explosionAnimation   = new Animation(this.explosionSpriteSheet, "explosion1", 1, false);
 
         this.audioSource = this.addComponent(new AudioSource()); 
         this.animator = this.addComponent(new Animator(AnimationsConf.explosion1));

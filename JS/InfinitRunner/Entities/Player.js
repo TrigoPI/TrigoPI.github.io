@@ -6,7 +6,9 @@ class Player extends Entity {
 
         this.musicsManager = musicsManager;
 
+        this.isJumping = true;
         this.canRun = false;
+
         this.canRunClock = new Clock();
 
         this.speed = 0;
@@ -38,17 +40,21 @@ class Player extends Entity {
 
         this.rigidBody.setMaterial(new Material(0.1));
 
-        this.idleSpriteSheet    = GameSettings.TEXTURES.spriteSheets.playerIdle.copy();
-        this.effect1SpriteSheet = GameSettings.TEXTURES.spriteSheets.playerRun.copy();
+        this.idleSpriteSheet = GameSettings.TEXTURES.spriteSheets.playerIdle.copy();
+        this.runSpriteSheet  = GameSettings.TEXTURES.spriteSheets.playerRun.copy();
+        this.jumpSpriteSheet = GameSettings.TEXTURES.spriteSheets.playerJump.copy();
 
-        this.effect1Animation   = new Animation(this.effect1SpriteSheet, "run", 0.5);
-        this.idleAnimation      = new Animation(this.idleSpriteSheet, "idle", 1);
+        this.runAnimation   = new Animation(this.runSpriteSheet, "run", 0.5);
+        this.idleAnimation  = new Animation(this.idleSpriteSheet, "idle", 1);
+        this.jumpAnimation  = new Animation(this.jumpSpriteSheet, "jump", 0.5, false);
 
         this.idleSpriteSheet.scale(this.scale);
-        this.effect1SpriteSheet.scale(this.scale);
+        this.runSpriteSheet.scale(this.scale);
+        this.jumpSpriteSheet.scale(this.scale);
 
         this.animator.addAnimation(this.idleAnimation);
-        this.animator.addAnimation(this.effect1Animation);
+        this.animator.addAnimation(this.runAnimation);
+        this.animator.addAnimation(this.jumpAnimation);
 
         this.addComponent(new Renderable(new AnimationRenderer()));  
         
@@ -66,13 +72,15 @@ class Player extends Entity {
 
     onCollision(collider) {
         if (collider.tag == "PLATFORM") {
+            this.isJumping = false;
+
             if (!this.canRun) {
                 this.canRun = true;   
 
                 this.canRunClock.restart();
                 this.musicsManager.play();
 
-                this.instantiate(new PlayerExplosion(0, -200));
+                this.instantiate(new PlayerExplosion(0, -360));
             }
 
             if (this.speed > 0) {
@@ -90,8 +98,6 @@ class Player extends Entity {
     update() {
         this.rigidBody.velocity.x = this.speed;
 
-        this.animator.setNumber("speed", Math.abs(this.rigidBody.velocity.x));
-
         if (this.canRun) {
             if (this.canRunClock.getTime() > 0.7) {
                 this.speed = 400;
@@ -99,7 +105,13 @@ class Player extends Entity {
         }
 
         if (Settings.KEYS.Space.onPress) {
+            this.isJumping = true;
+
+            this.animator.restartAnimation("jump");
             this.rigidBody.velocity.add(new Vector2(0, -200));
         }
+
+        this.animator.setBool("isJumping", this.isJumping);
+        this.animator.setNumber("speedX", Math.abs(this.rigidBody.velocity.x));
     }
 }

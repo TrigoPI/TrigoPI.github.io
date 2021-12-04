@@ -26,10 +26,11 @@
         spriteSheets : {
             playerIdle      : "Ressources/Images/SpriteSheets/Player/idle.png",
             playerRun       : "Ressources/Images/SpriteSheets/Player/run.png",
+            playerJump      : "Ressources/Images/SpriteSheets/Player/jump.png",
             menuBackground  : "Ressources/Images/SpriteSheets/Menu/menuBackground.png",
             drone           : "Ressources/Images/SpriteSheets/Drone/drone.png",
             pnj1            : "Ressources/Images/SpriteSheets/PNJ/pnj1.png",
-            explosion1      : "Ressources/Images/SpriteSheets/Explosion/explosion1.png",
+            explosion1      : "Ressources/Images/SpriteSheets/Explosion/explosion-4.png",
         }
     };
 
@@ -58,10 +59,11 @@
         spriteSheets : {
             playerIdle      : new SpriteSheet(0, 0, PATHS.spriteSheets.playerIdle, 1, 4, 4),
             playerRun       : new SpriteSheet(0, 0, PATHS.spriteSheets.playerRun, 1, 8, 8),
+            playerJump      : new SpriteSheet(0, 0, PATHS.spriteSheets.playerJump, 1, 7, 7),
             menuBackground  : new SpriteSheet(0, 0, PATHS.spriteSheets.menuBackground, 6, 12, 72),
             drone           : new SpriteSheet(0, 0, PATHS.spriteSheets.drone, 1, 8, 8),
             pnj1            : new SpriteSheet(0, 0, PATHS.spriteSheets.pnj1, 3, 6, 16),
-            explosion1      : new SpriteSheet(0, 0, PATHS.spriteSheets.explosion1, 1, 9, 9),
+            explosion1      : new SpriteSheet(0, 0, PATHS.spriteSheets.explosion1, 1, 12, 12),
         }
     }
 

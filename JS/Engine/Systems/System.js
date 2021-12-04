@@ -33,7 +33,6 @@ class System {
             if (entity.isDead()) {
                 this.entities.removeEntity(entity);
             } else {
-
                 this.systemUpdate(entity);
             }
         }

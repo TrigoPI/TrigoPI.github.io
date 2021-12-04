@@ -104,11 +104,14 @@ class GameState extends State {
     }
 
     #updateECS() {
-        this.ECS.getSystem(TransformEngine).update();
-        this.ECS.getSystem(PhysicsEngine).update();
-        this.ECS.getSystem(CollisionEngine).update();
-        this.ECS.getSystem(AnimatorEngine).update();
-        this.ECS.getSystem(ParticleSystemEngine).update();
+        if (!this.inPause) {
+            this.ECS.getSystem(TransformEngine).update();
+            this.ECS.getSystem(PhysicsEngine).update();
+            this.ECS.getSystem(CollisionEngine).update();
+            this.ECS.getSystem(AnimatorEngine).update();
+            this.ECS.getSystem(ParticleSystemEngine).update();
+        }
+        
         this.ECS.getSystem(RenderingEngine).update();
     }
 
@@ -118,13 +121,10 @@ class GameState extends State {
 
     update() {
         this.#updateQuit();
-
-        if (!this.inPause) {
-            this.#updateECS();
-            this.#updateCameraAnchor();
-            this.#updateGenerator();
-            this.#updateFrameRateUI();
-        }
+        this.#updateECS();
+        this.#updateCameraAnchor();
+        this.#updateGenerator();
+        this.#updateFrameRateUI();
     }
 
     draw(window) {
