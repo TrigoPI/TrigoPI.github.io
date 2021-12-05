@@ -15,6 +15,7 @@
             footStep6       : "Ressources/Audios/Player/boots_step_right_3.wav",
             mainMusic       : "Ressources/Audios/Musics/mainMusic.mp3",
             explosionStart  : "Ressources/Audios/Explosions/explodeStart.wav",
+            bulletExplosion : "Ressources/Audios/Explosions/bulletExplosion.wav",
         },
 
         images : {
@@ -29,8 +30,10 @@
             playerJump      : "Ressources/Images/SpriteSheets/Player/jump.png",
             menuBackground  : "Ressources/Images/SpriteSheets/Menu/menuBackground.png",
             drone           : "Ressources/Images/SpriteSheets/Drone/drone.png",
-            pnj1            : "Ressources/Images/SpriteSheets/PNJ/pnj1.png",
+            pnj1Walk        : "Ressources/Images/SpriteSheets/PNJ/pnj1/walk.png",
+            pnj1Hurt        : "Ressources/Images/SpriteSheets/PNJ/pnj1/hurt.png",
             explosion1      : "Ressources/Images/SpriteSheets/Explosion/explosion-4.png",
+            bulletExplosion : "Ressources/Images/SpriteSheets/Explosion/bulletExplosion.png",
         }
     };
 
@@ -47,6 +50,7 @@
         footStep6       : new Sound(PATHS.audios.footStep6),
         mainMusic       : new Sound(PATHS.audios.mainMusic),
         explosionStart  : new Sound(PATHS.audios.explosionStart),
+        bulletExplosion : new Sound(PATHS.audios.bulletExplosion),
     };
 
     const TEXTURES = {
@@ -62,8 +66,10 @@
             playerJump      : new SpriteSheet(0, 0, PATHS.spriteSheets.playerJump, 1, 7, 7),
             menuBackground  : new SpriteSheet(0, 0, PATHS.spriteSheets.menuBackground, 6, 12, 72),
             drone           : new SpriteSheet(0, 0, PATHS.spriteSheets.drone, 1, 8, 8),
-            pnj1            : new SpriteSheet(0, 0, PATHS.spriteSheets.pnj1, 3, 6, 16),
+            pnj1Walk        : new SpriteSheet(0, 0, PATHS.spriteSheets.pnj1Walk, 3, 6, 16),
+            pnj1Hurt        : new SpriteSheet(0, 0, PATHS.spriteSheets.pnj1Hurt, 1, 1, 1),
             explosion1      : new SpriteSheet(0, 0, PATHS.spriteSheets.explosion1, 1, 12, 12),
+            bulletExplosion : new SpriteSheet(0, 0, PATHS.spriteSheets.bulletExplosion, 1, 8, 8),
         }
     }
 

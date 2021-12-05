@@ -17,10 +17,8 @@
     const TRANSPARENT       = new Color(0, 0, 0, 0);
 
     const MOUSE = {
-        x : 0,
-        y : 0,
-        worldX : 0,
-        worldY : 0,
+        local : new Vector2(),
+        world : new Vector2(),
         buttons : {
             left  : new MouseButton(),
             right : new MouseButton()
@@ -53,8 +51,7 @@
     }
 
     const MOUSEMOVE = event => {
-        MOUSE.x = event.clientX;
-        MOUSE.y = event.clientY;
+        MOUSE.local.set(event.clientX, event.clientY);
     }
 
     const MOUSEPRESSED = event => {

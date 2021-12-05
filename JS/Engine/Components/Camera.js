@@ -14,8 +14,8 @@ class Camera {
     }
 
     #updateMousePosition() {
-        Settings.MOUSE.worldX = Settings.MOUSE.x - this.anchor.x + this.position.x;
-        Settings.MOUSE.worldY = Settings.MOUSE.y - this.anchor.y + this.position.y;
+        Settings.MOUSE.world.x = Settings.MOUSE.local.x - this.anchor.x + this.position.x;
+        Settings.MOUSE.world.y = Settings.MOUSE.local.y - this.anchor.y + this.position.y;
     }
 
     setAnchor(x, y) {

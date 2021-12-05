@@ -21,5 +21,12 @@ class Drone extends Entity {
 
     update() {
         this.transform.localPosition.y += Math.sin(4 * this.time.getTime());
+
+        if (Settings.MOUSE.buttons.left.onPress) {
+            let direction = Vector2.sub(this.transform.position, Settings.MOUSE.world);
+            let bullet = this.instantiate(new Bullet(this.transform.position.x, this.transform.position.y));
+
+            bullet.setDirection(direction);
+        }
     }
 }

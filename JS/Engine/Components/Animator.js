@@ -26,10 +26,20 @@ class Animator {
         ];   
     }
 
+    getCurrentAnimationName() {
+        return this.animations[
+            this.animationGraph.getCurrentNodeName()
+        ].name;
+    }
+
     flipAnimation(value) {
         this.getCurrentAnimation().spriteSheet.flipSprite(value);
     }
-    
+
+    setOpacity(value) {
+        this.getCurrentAnimation().spriteSheet.setOpacity(value);
+    }
+
     setBool(varName, value) {
         this.animationGraph.setBool(varName, value);
     }

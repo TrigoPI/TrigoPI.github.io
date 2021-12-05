@@ -2,7 +2,7 @@ class AnimationGraph {
     constructor(animationConf) {
         this.entry = new Node("entry");  
         this.anyState = new Node("anyState"); 
-        this.var = animationConf.var;
+        this.var = JSON.parse(JSON.stringify(animationConf.var));
         
         this.nodes = {};
         this.currentNode = null;

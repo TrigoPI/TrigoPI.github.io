@@ -30,10 +30,9 @@ class GameState extends State {
         this.ECS.getSystem(CollisionEngine).addCollisionMask("player");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("pnj");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("bullet");
-        this.ECS.getSystem(CollisionEngine).addCollisionMask("explosionStart");
 
         this.ECS.getSystem(CollisionEngine).ignoreCollision("player", "pnj");
-        this.ECS.getSystem(CollisionEngine).ignoreAll("explosionStart");
+        this.ECS.getSystem(CollisionEngine).ignoreAll("bullet");
     }
 
     #initEntity() {

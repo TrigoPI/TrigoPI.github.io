@@ -108,7 +108,7 @@ class Player extends Entity {
             this.isJumping = true;
 
             this.animator.restartAnimation("jump");
-            this.rigidBody.velocity.add(new Vector2(0, -200));
+            this.rigidBody.velocity.add(new Vector2(0, -300));
         }
 
         this.animator.setBool("isJumping", this.isJumping);

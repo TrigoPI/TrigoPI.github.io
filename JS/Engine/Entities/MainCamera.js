@@ -38,9 +38,9 @@ class MainCamera extends Entity {
     }
 
     smoothFollow(k) {
-        this.transform.position.add(
-            Vector2.lerp(this.transform.position, this.traget.position, k)
-        )
+        let position = Vector2.lerp(this.transform.position, this.traget.position, k);
+
+        this.transform.position.x += position.x;
     }
 
     follow() {

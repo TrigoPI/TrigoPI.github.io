@@ -2,6 +2,9 @@ class PlayerExplosion extends Entity {
     constructor(x, y) {
         super(x, y);
 
+        this.clock = new Clock();
+        this.opacity = 1;
+
         this.explosionAudio = GameSettings.AUDIOS.explosionStart.clone();
         this.explosionSpriteSheet = GameSettings.TEXTURES.spriteSheets.explosion1.copy();
         this.explosionAnimation   = new Animation(this.explosionSpriteSheet, "explosion1", 1, false);
@@ -22,8 +25,13 @@ class PlayerExplosion extends Entity {
     }
 
     update() {
-        if (this.animator.isFinish()) {
+        this.opacity -= this.clock.getTime() * 0.01;
+        
+        if (this.opacity <= 0) {
+            this.opacity = 0;
             this.kill();
         }
+
+        this.explosionSpriteSheet.setOpacity(this.opacity);
     }
 }

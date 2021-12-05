@@ -1,8 +1,8 @@
 class Sprite extends Drawable {
     constructor(x = 0, y = 0, path = "") {
         super(x, y);
-
         this.flip = 1;
+        this.opacity = 1;
 
         this.width = 0;
         this.height = 0;
@@ -28,6 +28,10 @@ class Sprite extends Drawable {
         sprite.height = this.height;
 
         return sprite;
+    }   
+
+    setOpacity(value) {
+        this.opacity = value;
     }
 
     setSize(width, height) {

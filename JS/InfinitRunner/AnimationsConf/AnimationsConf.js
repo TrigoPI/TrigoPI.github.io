@@ -130,12 +130,15 @@
 
     const pnj = {
         var : {
-            bool : {},
+            bool : {
+                isDead : false
+            },
             number : {}
         },
 
         nodes : [
             "walk",
+            "hurt"
         ],
 
         nodesConf : {
@@ -155,9 +158,25 @@
             },
 
             walk : {
-                childs  : [],
+                childs : [
+                    {
+                        name : "hurt",
+                        conditions : [
+                            {
+                                type : "bool",
+                                varName : "isDead",
+                                equalTo : true
+                            }
+                        ]
+                    }
+                ],
                 parents : [],
             },
+
+            hurt : {
+                childs : [],
+                parents : []
+            }
         }
     }
 
@@ -194,8 +213,42 @@
         }
     }
 
+    const bulletExplosion = {
+        var : {
+            bool : {},
+            number : {}
+        },
+
+        nodes : [
+            "bulletExplosion",
+        ],
+
+        nodesConf : {
+            entry : {
+                childs  : [
+                    {
+                        name : "bulletExplosion",
+                        conditions : []
+                    }
+                ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
+            bulletExplosion : {
+                childs  : [],
+                parents : [],
+            },
+        }
+    }
+    
     exports.player          = player;
     exports.drone           = drone;
     exports.pnj             = pnj;
-    exports.explosion1      = explosion1
+    exports.explosion1      = explosion1;
+    exports.bulletExplosion = bulletExplosion;
 });
