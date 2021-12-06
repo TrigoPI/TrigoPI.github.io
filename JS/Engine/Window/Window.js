@@ -68,7 +68,8 @@ class Window {
         this.context.save();
         this.context.beginPath();
         this.context.translate(rectangleShape.position.x,  rectangleShape.position.y);
-        
+        this.context.rotate(rectangleShape.rotation);
+
         this.context.fillStyle = `rgba(
             ${rectangleShape.fillColor.r},
             ${rectangleShape.fillColor.g},
@@ -115,6 +116,7 @@ class Window {
         this.context.save();
         this.context.globalAlpha = sprite.opacity;
         this.context.translate(sprite.position.x, sprite.position.y);
+        this.context.rotate(sprite.rotation);
         this.context.scale(sprite.flip, 1);
         this.context.drawImage(sprite.image, -sprite.width / 2, -sprite.height / 2, sprite.width, sprite.height);
         this.context.restore();
@@ -130,6 +132,7 @@ class Window {
         this.context.save();
         this.context.globalAlpha = animation.spriteSheet.opacity;
         this.context.translate(spriteSheet.position.x,  spriteSheet.position.y);
+        this.context.rotate(spriteSheet.rotation);
         this.context.scale(spriteSheet.flip, 1);
         this.context.drawImage(spriteSheet.image, sx, sy, spriteSheet.cellWidth, spriteSheet.cellHeight, -spriteSheet.cellWidthRender / 2, -spriteSheet.cellHeightRender / 2, spriteSheet.cellWidthRender, spriteSheet.cellHeightRender);
         this.context.restore();

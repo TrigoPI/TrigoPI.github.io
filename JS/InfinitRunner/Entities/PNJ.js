@@ -16,12 +16,24 @@ class PNJ extends Entity {
         
         this.direction = Settings.RANDOM_NUMBER(-1, 1);
 
-        this.transform = this.getComponent(Transform);
-        this.rigidBody = this.addComponent(new RigidBody()); 
-        this.collider  = this.addComponent(new Collider(this.width, this.height + Settings.RANDOM_INT(-100, 100), "PNJ"));
-        this.animator  = this.addComponent(new Animator(AnimationsConf.pnj));
+        this.transform   = this.getComponent(Transform);
+        this.rigidBody   = this.addComponent(new RigidBody()); 
+        this.collider    = this.addComponent(new Collider(this.width, this.height, "PNJ"));
+        this.animator    = this.addComponent(new Animator(AnimationsConf.pnj));
+        this.audioSource = this.addComponent(new AudioSource());
 
+        this.deathAudio = GameSettings.AUDIOS.kyaa.clone();
+
+        this.offset = Settings.RANDOM_INT(-100, 10);
+
+        this.transform.position.y += this.offset;
+
+        this.deathAudio.setVolume(100);
         this.collider.setCollisionMask("pnj");
+
+        this.rigidBody.setGravityScale(0);
+
+        this.audioSource.addAudio(this.deathAudio, "kyaa");
 
         this.addComponent(new Renderable(new AnimationRenderer()));        
         
@@ -43,7 +55,7 @@ class PNJ extends Entity {
     }
 
     #initLayer() {
-        if (this.collider.height < this.height) {
+        if (this.transform.position.y > -100) {
             this.setLayer(3);
         } else {
             this.setLayer(0);
@@ -51,8 +63,10 @@ class PNJ extends Entity {
     }
 
     onCollision(collider) {
-        if (collider.tag == "BULLET") {
+        if (collider.tag == "PLAYER_BULLET" || collider.tag == "BOSS_BULLET") {
             if (this.alive) {
+                // this.audioSource.play("kyaa");
+
                 this.alive = false;
 
                 this.animator.setBool("isDead", true);

@@ -2,33 +2,34 @@ class LoadRessourcesState extends State {
     constructor(states, window, interfaces) {
         super(states, window, interfaces);
 
-        this.textures = [];
+        this.ressouces = [];
 
         this.interfaces.displayInterface("load_interface");
+
         this.loadTextures();
     }
 
     loadTextures() {
         for (let textureType in GameSettings.TEXTURES) {
             for (let texture in GameSettings.TEXTURES[textureType]) {
-                this.textures.push(false);
+                this.ressouces.push(false);
 
-                let index = this.textures.length - 1;
+                let index = this.ressouces.length - 1;
     
                 GameSettings.TEXTURES[textureType][texture].load(() => {
                     console.log(`Texture : ${texture} loaded`);
-                    this.textures[index] = true;                     
+                    this.ressouces[index] = true;                     
                 });
             }
         }
     }
-
+    
     canPlay() {
         let index = 0;
         let valid = true;
 
-        while (valid && index < this.textures.length) {
-            valid = this.textures[index];
+        while (valid && index < this.ressouces.length) {
+            valid = this.ressouces[index];
             index++;
         }
 

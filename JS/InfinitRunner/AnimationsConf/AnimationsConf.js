@@ -126,7 +126,7 @@
                 parents : [],
             },
         }
-    }
+    };
 
     const pnj = {
         var : {
@@ -178,7 +178,7 @@
                 parents : []
             }
         }
-    }
+    };
 
     const explosion1 = {
         var : {
@@ -211,7 +211,7 @@
                 parents : [],
             },
         }
-    }
+    };
 
     const bulletExplosion = {
         var : {
@@ -244,11 +244,147 @@
                 parents : [],
             },
         }
-    }
+    };
     
+    const bullet = {
+        var : {
+            bool : {},
+            number : {}
+        },
+
+        nodes : [
+            "bullet",
+        ],
+
+        nodesConf : {
+            entry : {
+                childs  : [
+                    {
+                        name : "bullet",
+                        conditions : []
+                    }
+                ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
+            bullet : {
+                childs  : [],
+                parents : [],
+            },
+        }
+    };
+
+    const bipedal = {
+        var : {
+            bool : {},
+            number : {}
+        },
+
+        nodes : [
+            "walk",
+        ],
+
+        nodesConf : {
+            entry : {
+                childs  : [
+                    {
+                        name : "walk",
+                        conditions : []
+                    }
+                ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
+            bullet : {
+                childs  : [],
+                parents : [],
+            },
+        }
+    };
+
+    const smoke = {
+        var : {
+            bool : {},
+            number : {}
+        },
+
+        nodes : [
+            "smoke",
+        ],
+
+        nodesConf : {
+            entry : {
+                childs  : [
+                    {
+                        name : "smoke",
+                        conditions : []
+                    }
+                ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
+            bullet : {
+                childs  : [],
+                parents : [],
+            },
+        }
+    };
+
+    const shield = {
+        var : {
+            bool : {},
+            number : {}
+        },
+
+        nodes : [
+            "shield",
+        ],
+
+        nodesConf : {
+            entry : {
+                childs  : [
+                    {
+                        name : "shield",
+                        conditions : []
+                    }
+                ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
+            bullet : {
+                childs  : [],
+                parents : [],
+            },
+        }
+    };
+
     exports.player          = player;
     exports.drone           = drone;
     exports.pnj             = pnj;
     exports.explosion1      = explosion1;
     exports.bulletExplosion = bulletExplosion;
+    exports.bullet          = bullet;
+    exports.bipedal         = bipedal;
+    exports.smoke           = smoke;
+    exports.shield          = shield;
 });

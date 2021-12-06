@@ -14,8 +14,9 @@ class RenderingEngine extends System {
 
             drawable.position.x = transform.position.x;
             drawable.position.y = transform.position.y;
+            drawable.rotation = transform.rotation;
         }
-    }   
+    }
 
     #updateEntity(entity) {
         entity.update();

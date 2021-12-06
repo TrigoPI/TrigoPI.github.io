@@ -3,6 +3,7 @@ class Player extends Entity {
         super(x, y);
 
         this.drone;
+        this.shield;
 
         this.musicsManager = musicsManager;
 
@@ -14,8 +15,8 @@ class Player extends Entity {
         this.speed = 0;
         this.scale = 2;
 
-        this.width = 20;
-        this.height = 160;
+        this.width = 50;
+        this.height = 70;
 
         this.runSounds = [
             {sound : GameSettings.AUDIOS.footStep1.clone(), name : "run1"},
@@ -70,6 +71,11 @@ class Player extends Entity {
         }
     }
 
+    start() {
+        this.drone = this.addChild(new Drone(this.transform.position.x - 50, this.transform.position.y - 40));
+        this.shield = this.addChild(new Shield(0, 0));
+    }
+
     onCollision(collider) {
         if (collider.tag == "PLATFORM") {
             this.isJumping = false;
@@ -89,15 +95,13 @@ class Player extends Entity {
                 }
             }
         }
+
+        if (collider.tag == "BOSS_BULLET") {
+            this.kill();
+        }
     }
 
-    start() {
-        this.drone = this.addChild(new Drone(this.transform.position.x - 50, this.transform.position.y - 40));
-    }
-
-    update() {
-        this.rigidBody.velocity.x = this.speed;
-
+    move() {
         if (this.canRun) {
             if (this.canRunClock.getTime() > 0.7) {
                 this.speed = 400;
@@ -108,10 +112,28 @@ class Player extends Entity {
             this.isJumping = true;
 
             this.animator.restartAnimation("jump");
+
+            this.rigidBody.velocity.y = 0;
             this.rigidBody.velocity.add(new Vector2(0, -300));
         }
 
+        if (Settings.KEYS.KeyS.pressed) {
+            this.rigidBody.addForce(new Vector2(0, 10));
+        }
+    }
+
+    updateVelocity() {
+        this.rigidBody.velocity.x = this.speed;
+    }
+
+    updateAnimationState() {
         this.animator.setBool("isJumping", this.isJumping);
         this.animator.setNumber("speedX", Math.abs(this.rigidBody.velocity.x));
+    }
+
+    update() {
+        this.updateVelocity();
+        this.move();
+        this.updateAnimationState();
     }
 }

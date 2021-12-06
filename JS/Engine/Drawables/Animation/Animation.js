@@ -45,6 +45,7 @@ class Animation extends Drawable {
     #updateSpriteSheetPosition() {
         this.spriteSheet.position.x = this.position.x;
         this.spriteSheet.position.y = this.position.y;
+        this.spriteSheet.rotation = this.rotation;
     }
 
     #updateAnimation() {

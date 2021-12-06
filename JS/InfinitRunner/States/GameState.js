@@ -13,13 +13,13 @@ class GameState extends State {
         this.clock = new Clock();
 
         this.musicManager = new MusicsManager();
-        this.mainCamera = new MainCamera(0, 0, this.window);
-        this.player = new Player(0, -1000, this.musicManager);
+        this.mainCamera   = new MainCamera(0, 0, this.window);
+        this.player       = new Player(0, -1000, this.musicManager);
+        this.flyingUnit   = new FlyingUnit(200, -300, this.mainCamera, this.player, this.interfaces);
+        this.PNJManager   = new PNJManager(this.mainCamera);
+        this.plaform      = new Platform(0, -90, 500000, 20);
 
         this.backgroundGenerator = new BackgroundGenerator(this.mainCamera);
-
-        this.mainCamera.setPosition(0, -135);
-        this.mainCamera.setTarget(this.player);
 
         this.#initCollisionMask();
         this.#initEntity();
@@ -30,18 +30,26 @@ class GameState extends State {
         this.ECS.getSystem(CollisionEngine).addCollisionMask("player");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("pnj");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("bullet");
+        this.ECS.getSystem(CollisionEngine).addCollisionMask("bipedal");
+        this.ECS.getSystem(CollisionEngine).addCollisionMask("shield");
 
+        this.ECS.getSystem(CollisionEngine).ignoreCollision("pnj", "pnj");
+        this.ECS.getSystem(CollisionEngine).ignoreCollision("pnj", "bipedal");
         this.ECS.getSystem(CollisionEngine).ignoreCollision("player", "pnj");
         this.ECS.getSystem(CollisionEngine).ignoreAll("bullet");
+        this.ECS.getSystem(CollisionEngine).ignoreAll("shield");
     }
 
     #initEntity() {
         this.ECS.addEntity(this.mainCamera);
         this.ECS.addEntity(this.musicManager);
         this.ECS.addEntity(this.player);
+        this.ECS.addEntity(this.flyingUnit);
+        this.ECS.addEntity(this.PNJManager);
+        this.ECS.addEntity(this.plaform);
 
-        this.ECS.addEntity(new PNJManager(this.mainCamera));
-        this.ECS.addEntity(new Platform(0, -50, 500000, 20));
+        this.mainCamera.setPosition(0, -135);
+        this.mainCamera.setTarget(this.player);
     }
 
     #sliderEndEvent() {
@@ -52,10 +60,21 @@ class GameState extends State {
         }
     }
 
+    #onPlayerDeath() {
+        if (this.player.isDead()) {
+            this.musicManager.stop();
+
+            this.interfaces.removeInterface("framerate_ui");
+            this.interfaces.removeInterface("boss_life_ui");
+            
+            this.kill();
+        }   
+    }
+
     #updateFrameRateUI() {
         if (this.clock.getTime() > 0.5) {
             this.interfaces.getInterface("framerate_ui").children[0].innerText = Math.floor(1 / Settings.DT);
-        
+
             this.clock.restart();
         }
     }
@@ -81,6 +100,7 @@ class GameState extends State {
                         this.interfaces.removeInterface("slider_switch_r");
                         this.interfaces.removeInterface("pause_widget");
                         this.interfaces.removeInterface("framerate_ui");
+                        this.interfaces.removeInterface("boss_life_ui");
 
                         this.kill();
                     }
@@ -119,6 +139,7 @@ class GameState extends State {
     }
 
     update() {
+        this.#onPlayerDeath();
         this.#updateQuit();
         this.#updateECS();
         this.#updateCameraAnchor();

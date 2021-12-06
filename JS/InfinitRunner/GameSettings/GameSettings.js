@@ -34,6 +34,10 @@
             pnj1Hurt        : "Ressources/Images/SpriteSheets/PNJ/pnj1/hurt.png",
             explosion1      : "Ressources/Images/SpriteSheets/Explosion/explosion-4.png",
             bulletExplosion : "Ressources/Images/SpriteSheets/Explosion/bulletExplosion.png",
+            bullet1         : "Ressources/Images/SpriteSheets/Bullets/bullet1.png",
+            flyingUnit      : "Ressources/Images/SpriteSheets/Boss/flyingUnit.png",
+            smoke           : "Ressources/Images/SpriteSheets/Effects/smoke.png",
+            shield          : "Ressources/Images/SpriteSheets/Effects/shield.png",
         }
     };
 
@@ -70,6 +74,10 @@
             pnj1Hurt        : new SpriteSheet(0, 0, PATHS.spriteSheets.pnj1Hurt, 1, 1, 1),
             explosion1      : new SpriteSheet(0, 0, PATHS.spriteSheets.explosion1, 1, 12, 12),
             bulletExplosion : new SpriteSheet(0, 0, PATHS.spriteSheets.bulletExplosion, 1, 8, 8),
+            bullet1         : new SpriteSheet(0, 0, PATHS.spriteSheets.bullet1, 6, 5, 30),
+            flyingUnit      : new SpriteSheet(0, 0, PATHS.spriteSheets.flyingUnit, 1, 8, 8),
+            smoke           : new SpriteSheet(0, 0, PATHS.spriteSheets.smoke, 5, 12, 16),
+            shield          : new SpriteSheet(0, 0, PATHS.spriteSheets.shield, 5, 1, 5),
         }
     }
 

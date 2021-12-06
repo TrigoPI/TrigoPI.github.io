@@ -184,6 +184,32 @@ body{
     animation: 0.4s forwards pauseWidget;
 }
 
+#boss_life_ui {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#boss_name {
+   padding: 10px; 
+}
+
+#life_container {
+    height: 15px;
+    width: 75%;
+    border-radius: 20px;
+    background-color: #2d3436ee;
+}
+
+#life {
+    height: 15px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #d63031ee;
+}
+
 button {
     background-color: transparent;
     border: solid #a29bfe;

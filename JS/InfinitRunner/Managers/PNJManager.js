@@ -21,15 +21,13 @@ class PNJManager extends Entity {
         this.transform = this.getComponent(Transform);
         
         this.clock = new Clock();
-
-        this.addComponent(new Renderable(new RectangleShape(0, -300, 20, 20, Settings.WHITE, Settings.WHITE)));
     }
 
     update() {
         this.transform.position.x = this.camera.getComponent(Camera).position.x + 2 * Settings.WINDOWSIZE.width;
 
-        if (this.clock.getTime() > 5) {
-            this.instantiate(new PNJ(this.transform.position.x, -300, this.pnjSpriteSheets[0], this.camera));
+        if (this.clock.getTime() > 3) {
+            this.instantiate(new PNJ(this.transform.position.x, -100, this.pnjSpriteSheets[0], this.camera));
 
             this.clock.restart();
         }

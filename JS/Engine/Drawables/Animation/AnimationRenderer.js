@@ -8,6 +8,7 @@ class AnimationRenderer extends Drawable {
     #updateAnimationPosition() {
         this.animation.position.x = this.position.x;
         this.animation.position.y = this.position.y;
+        this.animation.rotation = this.rotation;
 
         this.animation.update();
     }

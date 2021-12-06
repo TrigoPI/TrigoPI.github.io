@@ -24,7 +24,7 @@ class Drone extends Entity {
 
         if (Settings.MOUSE.buttons.left.onPress) {
             let direction = Vector2.sub(this.transform.position, Settings.MOUSE.world);
-            let bullet = this.instantiate(new Bullet(this.transform.position.x, this.transform.position.y));
+            let bullet = this.instantiate(new Bullet(this.transform.position.x, this.transform.position.y, "PLAYER_BULLET"));
 
             bullet.setDirection(direction);
         }

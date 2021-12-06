@@ -34,6 +34,7 @@
         KeyQ       : new Key("KeyQ"),
         KeyA       : new Key("KeyA"),
         KeyD       : new Key("KeyD"),
+        KeyS       : new Key("KeyS"),
         Enter      : new Key("Enter")
     };
     
@@ -136,6 +137,7 @@
     };
 
     (() => {
+        document.addEventListener('contextmenu', event => event.preventDefault());
         document.addEventListener("mousemove", MOUSEMOVE);
         document.addEventListener("mousedown", MOUSEPRESSED);
         document.addEventListener("mouseup",   MOUSEPRESSED);
