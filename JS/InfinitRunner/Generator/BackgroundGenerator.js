@@ -10,10 +10,10 @@ class BackgroundGenerator {
         this.buildingsBg    = [];
         this.nearBuildings  = [];
 
-        this.#init();
+        this.init();
     }   
 
-    #initBackground(array, scale, sprite, offsetY = 0) {
+    initBackground(array, scale, sprite, offsetY = 0) {
         let maxSprite = Math.ceil(Settings.WINDOWSIZE.width / (sprite.width * scale)) + 1;
         
         for (let i = 0; i < maxSprite; i++) {
@@ -33,13 +33,13 @@ class BackgroundGenerator {
         }
     }
 
-    #init() {
-        this.#initBackground(this.skyBackgrounds, 4.5, this.skyBackgroundSprite);
-        this.#initBackground(this.buildingsBg, 4, this.buildingsBgSprite, -150);
-        this.#initBackground(this.nearBuildings, 4, this.nearBuildingSprite);
+    init() {
+        this.initBackground(this.skyBackgrounds, 4.5, this.skyBackgroundSprite);
+        this.initBackground(this.buildingsBg, 4, this.buildingsBgSprite, -150);
+        this.initBackground(this.nearBuildings, 4, this.nearBuildingSprite);
     }
 
-    #generate(array, sprite) {
+    generate(array, sprite) {
         let cameraTransform = this.camera.getComponent(Transform);
         let position = array[0].sprite.position.x + array[0].sprite.width / 2;
         let screenLeftPosition = cameraTransform.position.x - this.camera.getAnchor().x 
@@ -74,7 +74,7 @@ class BackgroundGenerator {
         }
     }
 
-    #updateBackground(array, k) {
+    updateBackground(array, k) {
         let cameraTransform = this.camera.getComponent(Transform);
 
         for (let image of array) {
@@ -83,33 +83,33 @@ class BackgroundGenerator {
         }
     }
 
-    #updateBackgrounds() {
-        this.#updateBackground(this.skyBackgrounds, 0.1);
-        this.#updateBackground(this.buildingsBg, 0.4);
-        this.#updateBackground(this.nearBuildings, 1);
+    updateBackgrounds() {
+        this.updateBackground(this.skyBackgrounds, 0.1);
+        this.updateBackground(this.buildingsBg, 0.4);
+        this.updateBackground(this.nearBuildings, 1);
     }
 
-    #drawBackground(window, array) {
+    drawBackground(window, array) {
         for (let image of array) {
             window.draw(image.sprite);
         }
     }
 
-    #drawBackgrounds(window) {
-        this.#drawBackground(window, this.skyBackgrounds);
-        this.#drawBackground(window, this.buildingsBg);
-        this.#drawBackground(window, this.nearBuildings);
+    drawBackgrounds(window) {
+        this.drawBackground(window, this.skyBackgrounds);
+        this.drawBackground(window, this.buildingsBg);
+        this.drawBackground(window, this.nearBuildings);
     }
 
     update() {  
-        this.#generate(this.skyBackgrounds, this.skyBackgroundSprite);
-        this.#generate(this.buildingsBg, this.buildingsBgSprite);
-        this.#generate(this.nearBuildings, this.nearBuildingSprite);
+        this.generate(this.skyBackgrounds, this.skyBackgroundSprite);
+        this.generate(this.buildingsBg, this.buildingsBgSprite);
+        this.generate(this.nearBuildings, this.nearBuildingSprite);
 
-        this.#updateBackgrounds();      
+        this.updateBackgrounds();      
     }
 
     draw(window) {
-        this.#drawBackgrounds(window);
+        this.drawBackgrounds(window);
     }
 }

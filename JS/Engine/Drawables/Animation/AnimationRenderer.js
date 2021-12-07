@@ -5,7 +5,7 @@ class AnimationRenderer extends Drawable {
         this.animation = null;
     }
 
-    #updateAnimationPosition() {
+    updateAnimationPosition() {
         this.animation.position.x = this.position.x;
         this.animation.position.y = this.position.y;
         this.animation.rotation = this.rotation;
@@ -19,7 +19,7 @@ class AnimationRenderer extends Drawable {
 
     update() {
         if (this.animation != null) {
-            this.#updateAnimationPosition();
+            this.updateAnimationPosition();
         }
     }
 }

@@ -16,12 +16,12 @@ class ParticleSystem {
         return this.duration.getTime() < this.particleConfig.duration
     }
 
-    #addPhysics(particle) {
+    addPhysics(particle) {
         particle.velocity.add(this.gravity);
         particle.position.add(particle.velocity);
     }
 
-    #configureParticle(particle) {
+    configureParticle(particle) {
         let velocity = Settings.RANDOM_VECTOR_RANGE(this.particleConfig.velocityRange.min, this.particleConfig.velocityRange.max);
         let size = Settings.RANDOM_RANGE(this.particleConfig.particleSize.min, this.particleConfig.particleSize.max); 
         let color = this.particleConfig.colors[Settings.RANDOM_INT(0, this.particleConfig.colors.length - 1)];
@@ -35,7 +35,7 @@ class ParticleSystem {
         particle.setColor(color);
     }
 
-    #generateParticles() {
+    generateParticles() {
         if (this.isPlaying()) {
             let n = Math.floor(this.emissionTimer.getTime() * this.particleConfig.rateOverTime);
 
@@ -45,14 +45,14 @@ class ParticleSystem {
                     this.position.y, 
                     this.particleConfig.particleLifeTime)
 
-                this.#configureParticle(particle);
+                this.configureParticle(particle);
                 this.particles.push(particle);
                 this.emissionTimer.restart();
             }
         }
     }
 
-    #decreaseOverTime(particle) {
+    decreaseOverTime(particle) {
         if (this.particleConfig.decreaseOverTime) {
             particle.currentSize = particle.decreaseFactor * particle.time.getTime() + particle.size;
 
@@ -62,18 +62,18 @@ class ParticleSystem {
         }
     }
 
-    #updateParticles() {
+    updateParticles() {
         for (let i = 0; i < this.particles.length; i++) {
             if (this.particles[i].isDead()) {
                 this.particles.splice(i, 1);
             } else {
-                this.#addPhysics(this.particles[i]);
-                this.#decreaseOverTime(this.particles[i]);
+                this.addPhysics(this.particles[i]);
+                this.decreaseOverTime(this.particles[i]);
             }
         }
     }
 
-    #updateLoop() {
+    updateLoop() {
         if (this.particleConfig.loop) {
             if (this.isPlaying) {
                 this.restart();
@@ -81,15 +81,15 @@ class ParticleSystem {
         }
     }
 
-    #updateParticleSystem() {
+    updateParticleSystem() {
         if (this.start) {
-            this.#updateLoop();
-            this.#generateParticles();
-            this.#updateParticles();
+            this.updateLoop();
+            this.generateParticles();
+            this.updateParticles();
         }
     }
 
-    #drawParticles(window) {
+    drawParticles(window) {
         for (let particle of this.particles) {
             window.draw(particle);
         }
@@ -114,10 +114,10 @@ class ParticleSystem {
     }
 
     update() {
-        this.#updateParticleSystem();
+        this.updateParticleSystem();
     }
 
     draw(window) {
-        this.#drawParticles(window);
+        this.drawParticles(window);
     }
 }

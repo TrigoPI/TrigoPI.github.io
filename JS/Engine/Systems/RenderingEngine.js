@@ -5,7 +5,7 @@ class RenderingEngine extends System {
         this.layerMap = new LayerMap(10);
     }
 
-    #updateDrawalbePosition(entity) {
+    updateDrawalbePosition(entity) {
         let renderable = entity.getComponent(Renderable);
         let transform = entity.getComponent(Transform);
 
@@ -18,13 +18,13 @@ class RenderingEngine extends System {
         }
     }
 
-    #updateEntity(entity) {
+    updateEntity(entity) {
         entity.update();
     }
 
     systemUpdate(entity) {
-        this.#updateDrawalbePosition(entity);
-        this.#updateEntity(entity);
+        this.updateDrawalbePosition(entity);
+        this.updateEntity(entity);
 
         this.layerMap.update(entity);
     }
