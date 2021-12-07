@@ -13,8 +13,9 @@ class FlyingUnit extends Entity {
         this.attackList = [
             "normalFire",
             "ballFire",
-            "spiralFire"
-        ]
+            "spiralFire",
+            "groundAttack"
+        ];
 
         this.timer = new Clock();
         this.footTimer = new Clock();
@@ -64,6 +65,10 @@ class FlyingUnit extends Entity {
         return this.addChild(new NormalAttack(this.transform.position.x - 160, this.transform.position.y + 80, direction));
     }
 
+    groundFire() {
+        return this.instantiate(new GroundAttack(this.transform.position.x - 160, this.transform.position.y + 80));
+    }
+
     move() {
         this.animator.flipAnimation(-1);
 
@@ -103,6 +108,10 @@ class FlyingUnit extends Entity {
         
                     if (nextAttack == "spiralFire") {
                         this.attack = this.spiralFire();
+                    }
+
+                    if (nextAttack == "groundAttack") {
+                        this.attack = this.groundFire();
                     }
                 }
             }

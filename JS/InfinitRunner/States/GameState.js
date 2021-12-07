@@ -32,10 +32,14 @@ class GameState extends State {
         this.ECS.getSystem(CollisionEngine).addCollisionMask("bullet");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("bipedal");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("shield");
+        this.ECS.getSystem(CollisionEngine).addCollisionMask("groundFire");
 
         this.ECS.getSystem(CollisionEngine).ignoreCollision("pnj", "pnj");
         this.ECS.getSystem(CollisionEngine).ignoreCollision("pnj", "bipedal");
-        this.ECS.getSystem(CollisionEngine).ignoreCollision("player", "pnj");
+        this.ECS.getSystem(CollisionEngine).ignoreCollision("pnj", "player");
+        this.ECS.getSystem(CollisionEngine).ignoreCollision("groundFire", "player");
+        this.ECS.getSystem(CollisionEngine).ignoreCollision("groundFire", "pnj");
+        this.ECS.getSystem(CollisionEngine).ignoreCollision("groundFire", "bipedal");
         this.ECS.getSystem(CollisionEngine).ignoreAll("bullet");
         this.ECS.getSystem(CollisionEngine).ignoreAll("shield");
     }
@@ -61,14 +65,31 @@ class GameState extends State {
     }
 
     onPlayerDeath() {
-        if (this.player.isDead()) {
-            this.musicManager.stop();
+        if (!this.inPause) {
+            if (!this.player.alive) {
+                this.inPause = true;
+                this.musicManager.stop();
+    
+                this.interfaces.removeInterface("framerate_ui");
+                this.interfaces.removeInterface("boss_life_ui");
+                
+                this.interfaces.displayInterface("restart_widget");
 
-            this.interfaces.removeInterface("framerate_ui");
-            this.interfaces.removeInterface("boss_life_ui");
-            
-            this.kill();
-        }   
+                document.getElementById("restart_game_button").onclick = event => {
+                    this.inPause = false;
+                    this.interfaces.removeInterface("restart_widget");
+
+                    this.states.pop();
+                    this.states.push(new GameState(this.states, this.window, this.interfaces));
+                }
+
+                document.getElementById("quit_game_button").onclick = event => {
+                    this.interfaces.removeInterface("restart_widget");
+
+                    this.kill();
+                }
+            }   
+        }
     }
 
     updateFrameRateUI() {

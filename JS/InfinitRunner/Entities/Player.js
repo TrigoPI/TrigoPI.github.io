@@ -7,6 +7,7 @@ class Player extends Entity {
 
         this.musicsManager = musicsManager;
 
+        this.alive = true;
         this.isJumping = true;
         this.canRun = false;
 
@@ -97,7 +98,7 @@ class Player extends Entity {
         }
 
         if (collider.tag == "BOSS_BULLET") {
-            this.kill();
+            this.alive = false;
         }
     }
 

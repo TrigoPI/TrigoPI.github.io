@@ -5,6 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="CSS/main.css">
+
+        <script src="https://kit.fontawesome.com/19749a0418.js" crossorigin="anonymous"></script>
+
         <title>Projet Web</title>
     </head>
     <body>
@@ -97,6 +100,23 @@
                 </div>
             </div>
 
+            <div id="restart_widget" class="center-interface" style="background-color: #000000aa;">
+                <div class="center menu-color">
+                    <div class="title" style="display: flex; align-items: center;">
+                        <h1>PTDR T MORT</h1>
+                        <i class="fas fa-smile-wink" style="font-size:50px; color:#fdcb6e; margin: 0 20px;"></i>
+                    </div>
+                    <div class="center-col">
+                        <div>
+                            <button id="restart_game_button">Restart</button>
+                        </div>
+                        <div>
+                            <button id=quit_game_button>Quit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div id="framerate_ui" style="width: 50px; height: 50px; text-align: center; margin: 10px;">
                 <span>0</span>
             </div>
@@ -174,6 +194,7 @@
 
         <script src="JS/InfinitRunner/Entities/Platform.js"></script>
         <script src="JS/InfinitRunner/Entities/Attack.js"></script>
+        <script src="JS/InfinitRunner/Entities/GroundAttack.js"></script>
         <script src="JS/InfinitRunner/Entities/SpiralAttack.js"></script>
         <script src="JS/InfinitRunner/Entities/NormalAttack.js"></script>
         <script src="JS/InfinitRunner/Entities/BallAttack.js"></script>

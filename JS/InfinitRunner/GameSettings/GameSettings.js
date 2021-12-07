@@ -38,6 +38,7 @@
             flyingUnit      : "Ressources/Images/SpriteSheets/Boss/flyingUnit.png",
             smoke           : "Ressources/Images/SpriteSheets/Effects/smoke.png",
             shield          : "Ressources/Images/SpriteSheets/Effects/shield.png",
+            groundFire      : "Ressources/Images/SpriteSheets/Effects/groundFire.png"
         }
     };
 
@@ -78,6 +79,7 @@
             flyingUnit      : new SpriteSheet(0, 0, PATHS.spriteSheets.flyingUnit, 1, 8, 8),
             smoke           : new SpriteSheet(0, 0, PATHS.spriteSheets.smoke, 5, 12, 16),
             shield          : new SpriteSheet(0, 0, PATHS.spriteSheets.shield, 5, 1, 5),
+            groundFire      : new SpriteSheet(0, 0, PATHS.spriteSheets.groundFire, 8, 8, 61),
         }
     }
 

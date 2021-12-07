@@ -1,8 +1,15 @@
 class Shield extends Entity {
     constructor(x, y) {
         super(x, y);
-        
+    
+        this.shieldTimer = new Clock();
+        this.coolDownTimer = new Clock();
+
         this.opacity = 0;
+        this.coolDown = 0.1;
+        this.shieldDuration = 0.3;
+
+        this.activate = false;
 
         this.width = 20;
         this.height = 150;
@@ -26,28 +33,56 @@ class Shield extends Entity {
         this.collider.setCollisionMask("shield");
     }
 
-    update() {
-        this.transform.localPosition.set(100, 0);
-        this.shieldSpriteSheet.setOpacity(this.opacity);
-
-        if (Settings.MOUSE.buttons.right.pressed) {
-            this.collider.width = this.width;
-            this.collider.height = this.height;
-
-            if (this.opacity < 0.5) {
-                this.opacity += 0.05;
-            } else {
-                this.opacity = 0.5;
+    increaseOpacity() {
+        if (this.opacity < 0.5) {
+            this.opacity += 0.05;
+        
+            if (this.opacity > 1) {
+                this.opacity = 1;
             }
-        } else {
-            this.collider.width = 0;
-            this.collider.height = 0;
+        } 
+    }
 
-            if (this.opacity > 0) {
-                this.opacity -= 0.05;
-            } else {
+    decreaseOpacity() {
+        if (this.opacity > 0) {
+            this.opacity -= 0.05;
+
+            if (this.opacity < 0) {
                 this.opacity = 0;
             }
         }
+    }
+
+    update() {
+        this.transform.localPosition.set(100, 0);
+
+        if (!this.activate) {            
+            if (Settings.MOUSE.buttons.right.onPress) {
+                if (this.coolDownTimer.getTime() > this.coolDown) {
+                    this.activate = true;
+
+                    this.shieldTimer.restart();
+                }
+            }
+
+            this.collider.width = 0;
+            this.collider.height = 0;
+
+            this.decreaseOpacity();
+
+        } else {
+            if (this.shieldTimer.getTime() > this.shieldDuration) {
+                this.activate = false;
+
+                this.coolDownTimer.restart();
+            }
+
+            this.collider.width = this.width;
+            this.collider.height = this.height;
+
+            this.increaseOpacity();
+        }
+
+        this.shieldSpriteSheet.setOpacity(this.opacity);
     }
 }

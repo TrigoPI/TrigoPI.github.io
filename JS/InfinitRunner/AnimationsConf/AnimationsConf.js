@@ -378,6 +378,39 @@
         }
     };
 
+    const groundFire  = {
+        var : {
+            bool : {},
+            number : {}
+        },
+
+        nodes : [
+            "groundFire",
+        ],
+
+        nodesConf : {
+            entry : {
+                childs  : [
+                    {
+                        name : "groundFire",
+                        conditions : []
+                    }
+                ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
+            groundFire : {
+                childs  : [],
+                parents : [],
+            },
+        }
+    };
+
     exports.player          = player;
     exports.drone           = drone;
     exports.pnj             = pnj;
@@ -387,4 +420,5 @@
     exports.bipedal         = bipedal;
     exports.smoke           = smoke;
     exports.shield          = shield;
+    exports.groundFire      = groundFire;
 });

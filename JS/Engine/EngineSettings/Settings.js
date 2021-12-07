@@ -35,7 +35,9 @@
         KeyA       : new Key("KeyA"),
         KeyD       : new Key("KeyD"),
         KeyS       : new Key("KeyS"),
-        Enter      : new Key("Enter")
+        Enter      : new Key("Enter"),
+        Semicolon  : new Key("Semicolon"), 
+        KeyL       : new Key("KeyL"), 
     };
     
     const WINDOWSIZE = {
@@ -46,6 +48,8 @@
     const KEYPRESSED = event => {
         let isPressed = (event.type == "keydown")? true:false;
 
+        console.log(event.code);
+        
         if (event.code in Settings.KEYS) {
             KEYS[event.code].setPressed(isPressed);
         }
