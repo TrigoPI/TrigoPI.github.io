@@ -66,7 +66,7 @@ class Player extends Entity {
 
     #initSound() {
         for (let sound of this.runSounds) {
-            sound.sound.setVolume(60);
+            sound.sound.setVolume(70);
             this.audioSource.addAudio(sound.sound, sound.name);
         }
     }

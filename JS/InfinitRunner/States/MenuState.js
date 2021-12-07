@@ -9,6 +9,7 @@ class MenuState extends State {
         
         this.buttons = {
             start : document.getElementById("start_button"),
+            controls : document.getElementById("controls_button"),
             settings : document.getElementById("settings_button")
         }
         

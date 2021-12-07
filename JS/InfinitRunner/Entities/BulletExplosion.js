@@ -11,7 +11,10 @@ class BulletExplosion extends Entity {
         this.animator    = this.addComponent(new Animator(AnimationsConf.bulletExplosion));
         this.audioSource = this.addComponent(new AudioSource());
 
-        this.audioSource.addAudio(GameSettings.AUDIOS.bulletExplosion.clone(), "bulletExplosion");
+        this.explosionAudio = GameSettings.AUDIOS.bulletExplosion.clone();
+
+        this.explosionAudio.setVolume(50);
+        this.audioSource.addAudio(this.explosionAudio, "bulletExplosion");
         this.animator.addAnimation(this.bulletExplosionAnimation);
         
         this.addComponent(new Renderable(new AnimationRenderer()));

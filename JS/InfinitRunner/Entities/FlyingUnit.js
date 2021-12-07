@@ -3,20 +3,24 @@ class FlyingUnit extends Entity {
         super(x, y);
 
         this.lifeBarUI;
+        this.attack;
+
+        this.randomTime = 0;
 
         this.totalLife = 100000
         this.life = this.totalLife;
 
         this.attackList = [
             "normalFire",
-            "ballFire"
+            "ballFire",
+            "spiralFire"
         ]
 
         this.timer = new Clock();
         this.footTimer = new Clock();
         this.attackTimer = new Clock();
         this.interfaces = interfaces;
-
+        
         this.ready = false;
 
         this.offset = -100;
@@ -46,6 +50,20 @@ class FlyingUnit extends Entity {
         this.addComponent(new Renderable(new AnimationRenderer()));
     }
 
+    spiralFire() {
+        return this.addChild(new SpiralAttack(this.transform.position.x - 160, this.transform.position.y + 80));
+    }
+
+    ballFire() {
+        return this.addChild(new BallAttack(this.transform.position.x - 160, this.transform.position.y + 80));
+    }
+
+    normalFire() {
+        let direction = Vector2.sub(this.transform.position, this.player.getComponent(Transform).position);
+
+        return this.addChild(new NormalAttack(this.transform.position.x - 160, this.transform.position.y + 80, direction));
+    }
+
     move() {
         this.animator.flipAnimation(-1);
 
@@ -55,9 +73,37 @@ class FlyingUnit extends Entity {
                     this.offset += 5;
                 } else {
                     this.ready = true;
-                    
+                    this.randomTime = Settings.RANDOM_INT(1, 5);
+
+                    this.attackTimer.restart();
                     this.interfaces.displayInterface("boss_life_ui");
+
                     this.lifeBarUI = document.getElementById("life");
+                    this.attack = this.normalFire();
+                }
+            }
+        }
+    }
+
+    fire() {
+        if (this.ready) {
+            if (this.attack.isFinish()) {
+                if (this.attackTimer.clock(this.randomTime)) {
+                    this.randomTime = Settings.RANDOM_INT(1, 5);
+        
+                    let nextAttack = this.attackList[Settings.RANDOM_INT(0, this.attackList.length - 1)];
+                
+                    if (nextAttack == "normalFire") {
+                        this.attack = this.normalFire();
+                    }
+            
+                    if (nextAttack == "ballFire") {
+                        this.attack = this.ballFire();
+                    }
+        
+                    if (nextAttack == "spiralFire") {
+                        this.attack = this.spiralFire();
+                    }
                 }
             }
         }
@@ -73,55 +119,21 @@ class FlyingUnit extends Entity {
         this.transform.position.x = this.camera.getComponent(Transform).position.x + Settings.WINDOWSIZE.width - this.offset;
     }
 
-    ballFire() {
-        for (let i = 0; i < 360; i += 360 / 50) {
-            let angle = Settings.DEGTORAD(i);
-
-            let x = Math.cos(angle);
-            let y = Math.sin(angle);
-            let direction = new Vector2(x, y);
-
-            let bullet = this.instantiate(new Bullet(this.transform.position.x - 160, this.transform.position.y + 80, "BOSS_BULLET"));
-            
-            bullet.setDirection(direction);
-        }
-    }
-
-    normalFire() {
-        let bullet =  this.instantiate(new Bullet(this.transform.position.x - 160, this.transform.position.y + 80, "BOSS_BULLET"));
-        let direction = Vector2.sub(this.transform.position, this.player.getComponent(Transform).position);
-
-        bullet.setDirection(direction);
-    }
-
-    fire() {
-        if (this.ready) {
-            if (this.attackTimer.clock(2)) {
-                let nextAttack = this.attackList[Settings.RANDOM_INT(0, this.attackList.length - 1)];
-    
-                console.log(nextAttack);
-    
-                if (nextAttack == "normalFire") {
-                    this.normalFire();
-                }
-    
-                if (nextAttack == "ballFire") {
-                    this.ballFire();
-                }
-            }
+    updateLifeBar() {
+        if (this.lifeBarUI != undefined) {
+            this.lifeBarUI.style.width = `${100 * this.life / this.totalLife}%`; 
         }
     }
 
     onCollision(collider) {
         if (collider.tag == "PLAYER_BULLET") {
-            this.life -= 500;
-
-            this.lifeBarUI.style.width = `${100 * this.life / this.totalLife}%`; 
+            this.life -= 100;
         }
     }
 
     update() {
         this.fire();
+        this.updateLifeBar();
         this.move();
         this.smokeEffect();
         this.updatePosition();
