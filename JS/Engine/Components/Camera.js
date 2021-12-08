@@ -6,14 +6,14 @@ class Camera {
         this.context = context;
     }
 
-    #applyTranslation() {
+    applyTranslation() {
         this.context.translate(
             this.anchor.x - this.position.x, 
             this.anchor.y - this.position.y
         );
     }
 
-    #updateMousePosition() {
+    updateMousePosition() {
         Settings.MOUSE.world.x = Settings.MOUSE.local.x - this.anchor.x + this.position.x;
         Settings.MOUSE.world.y = Settings.MOUSE.local.y - this.anchor.y + this.position.y;
     }
@@ -28,8 +28,8 @@ class Camera {
     
     begin() {
         this.context.save();
-        this.#updateMousePosition();
-        this.#applyTranslation();
+        this.updateMousePosition();
+        this.applyTranslation();
     }
 
     end() {

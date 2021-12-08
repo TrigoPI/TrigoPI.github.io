@@ -37,11 +37,11 @@ class PNJ extends Entity {
 
         this.addComponent(new Renderable(new AnimationRenderer()));        
         
-        this.#initSpirteSheet();
-        this.#initLayer();
+        this.initSpirteSheet();
+        this.initLayer();
     }
 
-    #initSpirteSheet() {
+    initSpirteSheet() {
         for (let name in this.spriteSheets) {
             let spriteSheet = this.spriteSheets[name].spriteSheet.copy();
             let animation = new Animation(spriteSheet, name, this.spriteSheets[name].duration, this.spriteSheets[name].loop);
@@ -54,7 +54,7 @@ class PNJ extends Entity {
         this.animator.flipAnimation(this.direction);
     }
 
-    #initLayer() {
+    initLayer() {
         if (this.transform.position.y > -100) {
             this.setLayer(3);
         } else {

@@ -2,10 +2,10 @@ class ECS {
     constructor() {
         this.systemManager = new SystemManager();
 
-        this.#init();
+        this.init();
     }
 
-    #init() {
+    init() {
         this.addSystem(new TransformEngine());
         this.addSystem(new PhysicsEngine());
         this.addSystem(new CollisionEngine());

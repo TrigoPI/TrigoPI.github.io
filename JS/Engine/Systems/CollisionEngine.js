@@ -13,7 +13,7 @@ class CollisionEngine extends System {
         }
     }
 
-    #isIn(a, b) {
+    isIn(a, b) {
         let transformA = a.getComponent(Transform);
         let transformB = b.getComponent(Transform);
 
@@ -94,7 +94,7 @@ class CollisionEngine extends System {
         }
     }
 
-    #resolveCollision(a, b) {
+    resolveCollision(a, b) {
         let transformA = a.getComponent(Transform);
         let transformB = b.getComponent(Transform);
         let colliderA  = a.getComponent(Collider);
@@ -126,20 +126,20 @@ class CollisionEngine extends System {
         }
     }
 
-    #collisionResponse(a, b) {
+    collisionResponse(a, b) {
         let bodyA = a.getComponent(RigidBody);
         let bodyB = b.getComponent(RigidBody);
 
         if (bodyA.velocity.length() > 0) {
-            this.#resolveCollision(a, b);
+            this.resolveCollision(a, b);
         }
 
         if (bodyB.velocity.length() > 0) {
-            this.#resolveCollision(b, a);
+            this.resolveCollision(b, a);
         }
     }
     
-    #setFriction(a) {
+    setFriction(a) {
         let rigidBodyA = a.getComponent(RigidBody);
         
         let velocity = rigidBodyA.velocity.x * -rigidBodyA.material.friction;
@@ -147,7 +147,7 @@ class CollisionEngine extends System {
         rigidBodyA.velocity.add(new Vector2(velocity, 0));
     }
 
-    #onCollision(a, b) {        
+    onCollision(a, b) {        
         a.onCollision(b.getComponent(Collider));
     }
 
@@ -156,14 +156,14 @@ class CollisionEngine extends System {
             for (let b of this.entities) {
                 if (entity != b) { 
                     if (this.getMask(entity.getComponent(Collider).getCollisionMask(), b.getComponent(Collider).getCollisionMask()) == 1) {
-                        if (this.#isIn(entity, b)) {    
-                            this.#collisionResponse(entity, b);
-                            this.#setFriction(entity);
-                            this.#onCollision(entity, b);
+                        if (this.isIn(entity, b)) {    
+                            this.collisionResponse(entity, b);
+                            this.setFriction(entity);
+                            this.onCollision(entity, b);
                         }
                     } else {
-                        if (this.#isIn(entity, b)) {
-                            this.#onCollision(entity, b);
+                        if (this.isIn(entity, b)) {
+                            this.onCollision(entity, b);
                         }
                     }
                 }
