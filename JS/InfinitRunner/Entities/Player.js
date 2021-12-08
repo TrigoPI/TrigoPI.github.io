@@ -5,6 +5,12 @@ class Player extends Entity {
         this.drone;
         this.shield;
 
+        this.score = document.getElementById("score"); 
+        this.scoreClock = new Clock();
+        
+        this.scoreBase = 0; 
+        this.jump = 0;
+
         this.musicsManager = musicsManager;
 
         this.alive = true;
@@ -62,10 +68,10 @@ class Player extends Entity {
         
         this.setLayer(1);
 
-        this.initSound();
+        this.#initSound();
     }
 
-    initSound() {
+    #initSound() {
         for (let sound of this.runSounds) {
             sound.sound.setVolume(70);
             this.audioSource.addAudio(sound.sound, sound.name);
@@ -79,6 +85,8 @@ class Player extends Entity {
 
     onCollision(collider) {
         if (collider.tag == "PLATFORM") {
+            this.jump = 0;
+
             this.isJumping = false;
 
             if (!this.canRun) {
@@ -92,12 +100,15 @@ class Player extends Entity {
 
             if (this.speed > 0) {
                 if (this.audioSource.isFinish(this.runningSound) || this.audioSource.isStarted(this.runningSound)) {
-                    this.runningSound = this.audioSource.randomPlay(["run1", "run2", "run3", "run4", "run5", "run6"], [0.25, 0.05, 0.2, 0.25, 0.05, 0.2]);
+                    this.runningSound = this.audioSource.randomPlay(
+                        ["run1", "run2", "run3", "run4", "run5", "run6"], 
+                        [0.25, 0.05, 0.2, 0.25, 0.05, 0.2]
+                    );
                 }
             }
         }
 
-        if (collider.tag == "BOSS_BULLET") {
+        if (collider.tag == "BOSS_BULLET" || collider.tag == "GROUND_FIRE" || collider.tag == "BULLET_SUN") {
             this.alive = false;
         }
     }
@@ -109,13 +120,14 @@ class Player extends Entity {
             }
         }
 
-        if (Settings.KEYS.Space.onPress) {
+        if (Settings.KEYS.Space.onPress && this.jump < 2) {
             this.isJumping = true;
-
             this.animator.restartAnimation("jump");
 
             this.rigidBody.velocity.y = 0;
             this.rigidBody.velocity.add(new Vector2(0, -300));
+        
+            this.jump++;
         }
 
         if (Settings.KEYS.KeyS.pressed) {
@@ -132,9 +144,15 @@ class Player extends Entity {
         this.animator.setNumber("speedX", Math.abs(this.rigidBody.velocity.x));
     }
 
+    updateScore() {
+        this.scoreBase = Math.floor(this.scoreClock.getTime()*10);
+        this.score.innerText = this.scoreBase;
+    }
+
     update() {
         this.updateVelocity();
         this.move();
         this.updateAnimationState();
+        this.updateScore();
     }
 }

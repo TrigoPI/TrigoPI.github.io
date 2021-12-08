@@ -8,7 +8,7 @@ class MainCamera extends Entity {
         this.traget = null;
     }
 
-    updateCameraPosition() {
+    #updateCameraPosition() {
         this.camera.setPosition(
             this.transform.position.x, 
             this.transform.position.y
@@ -19,7 +19,7 @@ class MainCamera extends Entity {
         return this.camera.anchor;
     }
 
-    updateFollow() {
+    #updateFollow() {
         if (this.traget != null) {
             this.smoothFollow(0.5);
         }
@@ -49,8 +49,8 @@ class MainCamera extends Entity {
     }
 
     update() {
-        this.updateFollow();
-        this.updateCameraPosition();
+        this.#updateFollow();
+        this.#updateCameraPosition();
     }
 
     begin() {

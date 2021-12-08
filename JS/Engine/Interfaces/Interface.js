@@ -1,16 +1,16 @@
 class Interfaces {
     constructor() {
-        this.interfaces = this.getInterfaces();
+        this.interfaces = this.#getInterfaces();
     }
 
-    getInterfacesChildrens() {
+    #getInterfacesChildrens() {
         let interfaces = document.getElementById("interfaces");
         interfaces.remove();
         return interfaces.children;
     }
 
-    getInterfaces() {
-        let childrens = this.getInterfacesChildrens();
+    #getInterfaces() {
+        let childrens = this.#getInterfacesChildrens();
         let interfaces = {};
 
         for (let children of childrens) {

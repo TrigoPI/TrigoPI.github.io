@@ -3,22 +3,22 @@ class ParticleSystemEngine extends System {
         super();
     }
 
-    updatePosition(entity, particleSystem) {
+    #updatePosition(entity, particleSystem) {
         let transform = entity.getComponent(Transform);
 
         particleSystem.position.x = transform.position.x;
         particleSystem.position.y = transform.position.y;
     }
 
-    updateParticleSystem(particleSystem) {
+    #updateParticleSystem(particleSystem) {
         particleSystem.update();
     }
 
     systemUpdate(entity) {
         let particleSystem = entity.getComponent(ParticleSystem);
 
-        this.updatePosition(entity, particleSystem);
-        this.updateParticleSystem(particleSystem);
+        this.#updatePosition(entity, particleSystem);
+        this.#updateParticleSystem(particleSystem);
     }
 
     draw(window) {

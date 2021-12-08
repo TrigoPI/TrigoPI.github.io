@@ -3,11 +3,11 @@ class Window {
         this.width = width;
         this.height = height;
         
-        this.canvas = this.createCanvas(width, height);
-        this.context = this.getContext(this.canvas);
+        this.canvas = this.#createCanvas(width, height);
+        this.context = this.#getContext(this.canvas);
     }
 
-    fullScreenEvent = event => {
+    #fullScreenEvent = event => {
         let container = document.getElementById("window_container");
 
         this.width = window.innerWidth;
@@ -23,7 +23,7 @@ class Window {
         container.style.height = `${this.height}px`;
     }
 
-    screenSizeChange = event => {
+    #screenSizeChange = event => {
         let container = document.getElementById("window_container");
 
         this.width = window.innerWidth;
@@ -39,7 +39,7 @@ class Window {
         container.style.height = `${this.height}px`;
     }
 
-    createCanvas(width, height) {
+    #createCanvas(width, height) {
         let container = document.createElement("div");
         let canvas = document.createElement("canvas");
 
@@ -51,8 +51,8 @@ class Window {
         container.id = "window_container";
         container.style.position = "relative";
 
-        window.addEventListener("fullscreenchange", this.fullScreenEvent);
-        window.addEventListener("resize", this.screenSizeChange);
+        window.addEventListener("fullscreenchange", this.#fullScreenEvent);
+        window.addEventListener("resize", this.#screenSizeChange);
 
         document.body.appendChild(container);
         container.appendChild(canvas);
@@ -60,11 +60,11 @@ class Window {
         return canvas;
     }
 
-    getContext(canvas) {
+    #getContext(canvas) {
         return canvas.getContext("2d");
     }
 
-    drawRectangleShape(rectangleShape) {
+    #drawRectangleShape(rectangleShape) {
         this.context.save();
         this.context.beginPath();
         this.context.translate(rectangleShape.position.x,  rectangleShape.position.y);
@@ -92,7 +92,7 @@ class Window {
         this.context.restore();
     }
 
-    drawParticle(particle) {
+    #drawParticle(particle) {
         this.context.save();
         this.context.beginPath();
         this.context.translate(particle.position.x, particle.position.y);
@@ -110,7 +110,7 @@ class Window {
         this.context.restore();
     }
 
-    drawSprite(sprite) {
+    #drawSprite(sprite) {
         this.context.imageSmoothingEnabled = false;
 
         this.context.save();
@@ -122,7 +122,7 @@ class Window {
         this.context.restore();
     }
 
-    drawAnimation(animation) {
+    #drawAnimation(animation) {
         let spriteSheet = animation.spriteSheet;
         let sx = animation.indexCol * spriteSheet.cellWidth; 
         let sy = animation.indexRow * spriteSheet.cellHeight; 
@@ -138,9 +138,9 @@ class Window {
         this.context.restore();
     }
 
-    drawAnimationRenderer(animationRenderer) {
+    #drawAnimationRenderer(animationRenderer) {
         if (animationRenderer.animation != null) {
-            this.drawAnimation(animationRenderer.animation);
+            this.#drawAnimation(animationRenderer.animation);
         }
     }
 
@@ -170,19 +170,19 @@ class Window {
     draw(drawable) {
         switch (drawable.constructor.name) {
             case "RectangleShape" : 
-                this.drawRectangleShape(drawable);
+                this.#drawRectangleShape(drawable);
                 break;
             case "Sprite" : 
-                this.drawSprite(drawable);
+                this.#drawSprite(drawable);
                 break;
             case "Animation" :
-                this.drawAnimation(drawable);
+                this.#drawAnimation(drawable);
                 break;
             case "AnimationRenderer" :
-                this.drawAnimationRenderer(drawable);
+                this.#drawAnimationRenderer(drawable);
                 break;
             case "Particle" : 
-                this.drawParticle(drawable);
+                this.#drawParticle(drawable);
                 break;
         }
     }

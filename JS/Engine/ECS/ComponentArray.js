@@ -5,7 +5,7 @@ class ComponentArray extends Array {
         this.entityToIndex = {}
     }
 
-    mapEntityToIndex(entity) {
+    #mapEntityToIndex(entity) {
         this.entityToIndex[entity.id] = this.length;
     }
 
@@ -21,7 +21,7 @@ class ComponentArray extends Array {
     }
 
     addEntity(entity) {
-        this.mapEntityToIndex(entity);
+        this.#mapEntityToIndex(entity);
         this.push(entity);
     }
 }

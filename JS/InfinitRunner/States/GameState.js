@@ -2,7 +2,7 @@ class GameState extends State {
     constructor(states, window, interfaces) {
         super(states, window, interfaces);
         
-        this.interfaces.displayInterface("framerate_ui");
+        this.interfaces.displayInterface("score_ui");
 
         this.inPause = false;
 
@@ -21,12 +21,12 @@ class GameState extends State {
 
         this.backgroundGenerator = new BackgroundGenerator(this.mainCamera);
 
-        this.initCollisionMask();
-        this.initEntity();
-        this.sliderEndEvent();
+        this.#initCollisionMask();
+        this.#initEntity();
+        this.#sliderEndEvent();
     }
 
-    initCollisionMask() {
+    #initCollisionMask() {
         this.ECS.getSystem(CollisionEngine).addCollisionMask("player");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("pnj");
         this.ECS.getSystem(CollisionEngine).addCollisionMask("bullet");
@@ -44,7 +44,7 @@ class GameState extends State {
         this.ECS.getSystem(CollisionEngine).ignoreAll("shield");
     }
 
-    initEntity() {
+    #initEntity() {
         this.ECS.addEntity(this.mainCamera);
         this.ECS.addEntity(this.musicManager);
         this.ECS.addEntity(this.player);
@@ -56,7 +56,7 @@ class GameState extends State {
         this.mainCamera.setTarget(this.player);
     }
 
-    sliderEndEvent() {
+    #sliderEndEvent() {
         this.interfaces.displayInterface("slider_switch_l");
 
         this.interfaces.getInterface("slider_switch_l").onanimationend = event => {
@@ -64,13 +64,13 @@ class GameState extends State {
         }
     }
 
-    onPlayerDeath() {
+    #onPlayerDeath() {
         if (!this.inPause) {
             if (!this.player.alive) {
                 this.inPause = true;
                 this.musicManager.stop();
-    
-                this.interfaces.removeInterface("framerate_ui");
+                
+                this.interfaces.removeInterface("score_ui");
                 this.interfaces.removeInterface("boss_life_ui");
                 
                 this.interfaces.displayInterface("restart_widget");
@@ -92,7 +92,7 @@ class GameState extends State {
         }
     }
 
-    updateFrameRateUI() {
+    #updateFrameRateUI() {
         if (this.clock.getTime() > 0.5) {
             this.interfaces.getInterface("framerate_ui").children[0].innerText = Math.floor(1 / Settings.DT);
 
@@ -100,7 +100,7 @@ class GameState extends State {
         }
     }
 
-    updateQuit() {
+    #updateQuit() {
         if (Settings.KEYS.KeyQ.onPress) {
             this.inPause = !this.inPause;
             
@@ -120,7 +120,6 @@ class GameState extends State {
                     this.interfaces.getInterface("slider_switch_r").onanimationend = event => {
                         this.interfaces.removeInterface("slider_switch_r");
                         this.interfaces.removeInterface("pause_widget");
-                        this.interfaces.removeInterface("framerate_ui");
                         this.interfaces.removeInterface("boss_life_ui");
 
                         this.kill();
@@ -137,13 +136,13 @@ class GameState extends State {
         }
     }
 
-    updateCameraAnchor() {
+    #updateCameraAnchor() {
         let y = Settings.WINDOWSIZE.height - 135;
 
         this.mainCamera.setAnchor(300, y);
     }
 
-    updateECS() {
+    #updateECS() {
         if (!this.inPause) {
             this.ECS.getSystem(TransformEngine).update();
             this.ECS.getSystem(PhysicsEngine).update();
@@ -155,17 +154,17 @@ class GameState extends State {
         this.ECS.getSystem(RenderingEngine).update();
     }
 
-    updateGenerator() {
+    #updateGenerator() {
         this.backgroundGenerator.update();
     }
 
     update() {
-        this.onPlayerDeath();
-        this.updateQuit();
-        this.updateECS();
-        this.updateCameraAnchor();
-        this.updateGenerator();
-        this.updateFrameRateUI();
+        this.#onPlayerDeath();
+        this.#updateQuit();
+        this.#updateECS();
+        this.#updateCameraAnchor();
+        this.#updateGenerator();
+        this.#updateFrameRateUI();
     }
 
     draw(window) {

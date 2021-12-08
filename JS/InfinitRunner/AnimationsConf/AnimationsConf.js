@@ -279,6 +279,39 @@
         }
     };
 
+    const bullet2 = {
+        var : {
+            bool : {},
+            number : {}
+        },
+
+        nodes : [
+            "bullet2",
+        ],
+
+        nodesConf : {
+            entry : {
+                childs  : [
+                    {
+                        name : "bullet2",
+                        conditions : []
+                    }
+                ],
+                parents : []
+            },
+
+            anyState : {
+                childs : [],
+                parents : []
+            },
+
+            bullet : {
+                childs  : [],
+                parents : [],
+            },
+        }
+    };
+
     const bipedal = {
         var : {
             bool : {},
@@ -417,6 +450,7 @@
     exports.explosion1      = explosion1;
     exports.bulletExplosion = bulletExplosion;
     exports.bullet          = bullet;
+    exports.bullet2         = bullet2;
     exports.bipedal         = bipedal;
     exports.smoke           = smoke;
     exports.shield          = shield;

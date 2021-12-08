@@ -22,16 +22,16 @@ class Animation extends Drawable {
         this.clock = new Clock();
     }
 
-    updateFrameCount() {
+    #updateFrameCount() {
         this.currentFrame = this.indexRow * this.spriteSheet.col + this.indexCol;
     }
 
-    updateIndex() {        
+    #updateIndex() {        
         this.indexCol = Math.floor(this.clock.getTime() / this.colDuration) % this.spriteSheet.col;
         this.indexRow = Math.floor(this.clock.getTime() / this.rowDuration) % this.spriteSheet.row;    
     }
 
-    updateEndOfAnimation() {
+    #updateEndOfAnimation() {
         this.ended = false;
 
         if (this.currentFrame >= this.spriteSheet.frames - 1) {
@@ -42,17 +42,17 @@ class Animation extends Drawable {
         }
     }
 
-    updateSpriteSheetPosition() {
+    #updateSpriteSheetPosition() {
         this.spriteSheet.position.x = this.position.x;
         this.spriteSheet.position.y = this.position.y;
         this.spriteSheet.rotation = this.rotation;
     }
 
-    updateAnimation() {
+    #updateAnimation() {
         if (this.canPlay) {
-            this.updateFrameCount();
-            this.updateIndex();
-            this.updateEndOfAnimation();
+            this.#updateFrameCount();
+            this.#updateIndex();
+            this.#updateEndOfAnimation();
         }
     }
 
@@ -84,7 +84,7 @@ class Animation extends Drawable {
     }
 
     update() {
-        this.updateSpriteSheetPosition();
-        this.updateAnimation();
+        this.#updateSpriteSheetPosition();
+        this.#updateAnimation();
     }
 }

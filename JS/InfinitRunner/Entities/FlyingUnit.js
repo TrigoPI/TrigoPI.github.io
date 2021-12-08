@@ -14,7 +14,8 @@ class FlyingUnit extends Entity {
             "normalFire",
             "ballFire",
             "spiralFire",
-            "groundAttack"
+            "groundAttack",
+            "sunFire"
         ];
 
         this.timer = new Clock();
@@ -69,6 +70,12 @@ class FlyingUnit extends Entity {
         return this.instantiate(new GroundAttack(this.transform.position.x - 160, this.transform.position.y + 80));
     }
 
+    sunFire() {
+        let direction = Vector2.sub(this.transform.position, this.player.getComponent(Transform).position);
+
+        return this.instantiate(new BulletSunAttack(this.transform.position.x - 160, this.transform.position.y + 80, direction));
+    }
+
     move() {
         this.animator.flipAnimation(-1);
 
@@ -112,6 +119,10 @@ class FlyingUnit extends Entity {
 
                     if (nextAttack == "groundAttack") {
                         this.attack = this.groundFire();
+                    }
+
+                    if (nextAttack == "sunFire") {
+                        this.attack = this.sunFire();
                     }
                 }
             }

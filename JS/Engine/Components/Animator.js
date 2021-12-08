@@ -3,10 +3,10 @@ class Animator {
         this.animationGraph = new AnimationGraph(animationConf);
         this.animations = {}
 
-        this.init(animationConf);
+        this.#init(animationConf);
     } 
 
-    init(animationConf) {
+    #init(animationConf) {
         for (let name of animationConf.nodes) {
             this.animations[name] = null;
         }

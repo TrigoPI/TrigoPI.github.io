@@ -7,14 +7,14 @@ class AnimationGraph {
         this.nodes = {};
         this.currentNode = null;
 
-        this.init(animationConf);
+        this.#init(animationConf);
     }
 
-    readBool(bool) {
+    #readBool(bool) {
         return this.var.bool[bool.varName] == bool.equalTo;
     }
 
-    readNumber(number) {
+    #readNumber(number) {
         if ("gt" in number) {
             return this.var.number[number.varName] > number.gt;
         }
@@ -24,7 +24,7 @@ class AnimationGraph {
         }
     }
 
-    readConditions(conditions) {
+    #readConditions(conditions) {
         let isValid = true;
         let index = 0;
 
@@ -34,10 +34,10 @@ class AnimationGraph {
             while (isValid && index < conditions.length) {
                 switch (conditions[index].type) {
                     case "bool" : 
-                        isValid = this.readBool(conditions[index]);
+                        isValid = this.#readBool(conditions[index]);
                         break;
                     case "number" :
-                        isValid = this.readNumber(conditions[index]);
+                        isValid = this.#readNumber(conditions[index]);
                         break;
                 }
                 
@@ -48,13 +48,13 @@ class AnimationGraph {
         return isValid;
     }
 
-    crateAllNode(animationConf) {
+    #crateAllNode(animationConf) {
         for (let name of animationConf.nodes) {
             this.nodes[name] = new Node(name);
         }
     }
 
-    initNodes(animationConf) {
+    #initNodes(animationConf) {
         for (let name in animationConf.nodesConf) {
             if (name == "entry" || name == "anyState") {
                 if (name == "anyState") {
@@ -65,7 +65,7 @@ class AnimationGraph {
                     for (let child of animationConf.nodesConf[name].childs) {
                         this.entry.addChild(this.nodes[child.name], child.conditions);
                         
-                        if(this.readConditions(child.conditions)) {
+                        if(this.#readConditions(child.conditions)) {
                             this.currentNode = this.nodes[child.name];
                         };
                     }
@@ -82,34 +82,34 @@ class AnimationGraph {
         }
     }
 
-    init(animationConf) {
-        this.crateAllNode(animationConf);
-        this.initNodes(animationConf);
+    #init(animationConf) {
+        this.#crateAllNode(animationConf);
+        this.#initNodes(animationConf);
     } 
 
-    updateChilds() {
+    #updateChilds() {
         let node = this.currentNode.childs;
 
         for (let child of node) {
-            if (this.readConditions(child.conditions)) {
+            if (this.#readConditions(child.conditions)) {
                 this.currentNode = child.node;
             }        
         }
     }
 
-    updateParents() {
+    #updateParents() {
         let node = this.currentNode.parents;
 
         for (let parent of node) {
-            if (this.readConditions(parent.conditions)) {
+            if (this.#readConditions(parent.conditions)) {
                 this.currentNode = parent.node;
             }
         }
     }
 
-    updateAnyState() {
+    #updateAnyState() {
         for (let child of this.anyState.childs) {
-            if (this.readConditions(child.conditions)) {
+            if (this.#readConditions(child.conditions)) {
                 this.currentNode = child.node
             }
         }
@@ -142,8 +142,8 @@ class AnimationGraph {
     }
 
     update() {
-        this.updateAnyState();
-        this.updateChilds();
-        this.updateParents();
+        this.#updateAnyState();
+        this.#updateChilds();
+        this.#updateParents();
     }  
 }

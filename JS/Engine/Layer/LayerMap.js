@@ -2,10 +2,10 @@ class LayerMap {
     constructor(layers) {
         this.layers = [];
 
-        this.init(layers)
+        this.#init(layers)
     }
 
-    init(layers) {
+    #init(layers) {
         for (let i = 0; i < layers; i++) {
             this.addLayer();
         }
